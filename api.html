@@ -1,0 +1,1721 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>CP Judge API documentation</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="generator" content="https://github.com/raml2html/raml2html 7.2.0">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.page-header pre code, .top-resource-description pre code, .modal-body pre code').each(function (i, block) {
+        hljs.highlightBlock(block);
+      });
+
+      $('[data-toggle]').click(function () {
+        var selector = $(this).data('target') + ' pre code';
+        $(selector).each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      });
+
+      // open modal on hashes like #_action_get
+      $(window).bind('hashchange', function (e) {
+        var anchor_id = document.location.hash.substr(1); //strip #
+        var element = $('#' + anchor_id);
+
+        // do we have such element + is it a modal?  --> show it
+        if (element.length && element.hasClass('modal')) {
+          element.modal('show');
+        }
+      });
+
+      // execute hashchange on first page load
+      $(window).trigger('hashchange');
+
+      // remove url fragment on modal hide
+      $('.modal').on('hidden.bs.modal', function () {
+        try {
+          if (history && history.replaceState) {
+            history.replaceState({}, '', '#');
+          }
+        } catch (e) { }
+      });
+    });
+  </script>
+  <style>
+    .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h1 {
+        font-size: 1.3em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+      pre code {
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+      }
+      .items {
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+      }
+      .examples {
+        margin-left: 0.5em;
+      }
+      .resource-modal li > ul {
+        margin-bottom: 1em;
+      }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target="#sidebar">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9" role="main">
+        <div class="page-header">
+          <h1>CP Judge API documentation</h1>
+          <!-- <p>localhost:8000</p> -->
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 id="users" class="panel-title">/users</h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel-group">
+              <div class="panel panel-white resource-modal">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_users"><span class="parent"></span>/users</a>
+                    <span class="methods"><a href="#users_post"><span class="badge badge_post">post</span></a> <a href="#users_get"><span
+                          class="badge badge_get">get</span></a></span></h4>
+                </div>
+                <div id="panel_users" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="list-group">
+                      <div onclick="window.location.href = '#users_post'" class="list-group-item"><span class="badge badge_post">post</span>
+                        <div class="method_description"></div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#users_get'" class="list-group-item"><span class="badge badge_get">get</span>
+                        <div class="method_description">
+                          <p>Returns list of users.</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="users_post">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span
+                            class="parent"></span>/users</h4>
+                      </div>
+                      <div class="modal-body">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#users_post_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#users_post_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="users_post_request">
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                              <li><strong>Content-Type</strong>: <em>required (string)</em>
+                                <p>"application/json"</p>
+                              </li>
+                            </ul>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "username": "tourist",
+  "name": {
+    "firstName": "Mahim",
+    "lastName": "Agrawal"
+  },
+  "bio": "Guy in IT"
+}
+</code></pre>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="users_post_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "oAuthToken": "{oAuthToken}"
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="users_get">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/users</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>Returns list of users.</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#users_get_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="users_get_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: array of object</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-white resource-modal">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_users__userid_"><span
+                        class="parent">/users</span>/{userId}</a> <span class="methods"><a href="#users__userid__get"><span
+                          class="badge badge_get">get</span></a> <a href="#users__userid__put"><span class="badge badge_put">put</span></a>
+                      <a href="#users__userid__delete"><span class="badge badge_delete">delete</span></a></span></h4>
+                </div>
+                <div id="panel_users__userid_" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="list-group">
+                      <div onclick="window.location.href = '#users__userid__get'" class="list-group-item"><span class="badge badge_get">get</span>
+                        <div class="method_description">
+                          <p>Returns details of user</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#users__userid__put'" class="list-group-item"><span class="badge badge_put">put</span>
+                        <div class="method_description">
+                          <p>Updates the details of the user</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#users__userid__delete'" class="list-group-item"><span
+                          class="badge badge_delete">delete</span>
+                        <div class="method_description">
+                          <p>"To delete a user with {userId}"</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="users__userid__get">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/users</span>/{userId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>Returns details of user</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#users__userid__get_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#users__userid__get_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="users__userid__get_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>userId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="users__userid__get_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "username": "tourist",
+  "name": {
+    "firstName": "Mahim",
+    "lastName": "Agarwal"
+  },
+  "userId": 1,
+  "bio": "Guy in IT",
+  "rating": "Pro",
+  "subId": [2,3],
+  "quesId": [4,5]
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="users__userid__put">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_put">put</span> <span class="parent">/users</span>/{userId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>Updates the details of the user</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#users__userid__put_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#users__userid__put_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="users__userid__put_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>userId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "username": "tourist",
+  "name": {
+    "firstName": "Mahim",
+    "lastName": "Agarwal"
+  },
+  "bio": "Guy in IT"
+}
+</code></pre>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="users__userid__put_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "username": "tourist",
+  "name": {
+    "firstName": "Mahim",
+    "lastName": "Agarwal"
+  },
+  "userId": 1,
+  "bio": "Guy in IT",
+  "rating": "Boo",
+  "submissionId": [2,3],
+  "contestId": [4,5]
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="users__userid__delete">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span
+                            class="parent">/users</span>/{userId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"To delete a user with {userId}"</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#users__userid__delete_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#users__userid__delete_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="users__userid__delete_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>userId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="users__userid__delete_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "commit" : "success"
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 id="submissions" class="panel-title">/submissions</h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel-group">
+              <div class="panel panel-white resource-modal">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_submissions"><span
+                        class="parent"></span>/submissions</a> <span class="methods"><a href="#submissions_post"><span
+                          class="badge badge_post">post</span></a> <a href="#submissions_get"><span class="badge badge_get">get</span></a></span></h4>
+                </div>
+                <div id="panel_submissions" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="list-group">
+                      <div onclick="window.location.href = '#submissions_post'" class="list-group-item"><span class="badge badge_post">post</span>
+                        <div class="method_description"></div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#submissions_get'" class="list-group-item"><span class="badge badge_get">get</span>
+                        <div class="method_description">
+                          <p>Returns list of submissions</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="submissions_post">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span
+                            class="parent"></span>/submissions</h4>
+                      </div>
+                      <div class="modal-body">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#submissions_post_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#submissions_post_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="submissions_post_request">
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "userId": 123,
+  "questionId": 2,
+  "code": "print(&#39;Hello world&#39;)",
+  "status": "Accepted"
+}
+</code></pre>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="submissions_post_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "submissionId": 0,
+  "userId": 123,
+  "questionId": 2,
+  "code": "print(&#39;Hello world&#39;)",
+  "status": "Accepted"
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="submissions_get">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/submissions</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>Returns list of submissions</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#submissions_get_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#submissions_get_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="submissions_get_request">
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="submissions_get_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: array of object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>[
+  {
+    "submissionId": 0,
+    "userId": 123,
+    "questionId": 0,
+    "code": "print(&#39;Hello world&#39;)",
+    "status": "Accepted"
+  },
+  {
+    "submissionId": 1,
+    "userId": 124,
+    "questionId": 1,
+    "code": "print(&#39;Hello world&#39;)",
+    "status": "Accepted"
+  }
+]
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-white resource-modal">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_submissions__submissionid_"><span
+                        class="parent">/submissions</span>/{submissionId}</a> <span class="methods"><a href="#submissions__submissionid__get"><span
+                          class="badge badge_get">get</span></a></span></h4>
+                </div>
+                <div id="panel_submissions__submissionid_" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="list-group">
+                      <div onclick="window.location.href = '#submissions__submissionid__get'" class="list-group-item"><span
+                          class="badge badge_get">get</span>
+                        <div class="method_description">
+                          <p>"Returns details of Submission : {submissionId}"</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="submissions__submissionid__get">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/submissions</span>/{submissionId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"Returns details of Submission : {submissionId}"</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#submissions__submissionid__get_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#submissions__submissionid__get_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="submissions__submissionid__get_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>submissionId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="submissions__submissionid__get_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "submissionId": "{submissionId}",
+  "userId": 123,
+  "questionId": 0,
+  "code": "print(&#39;Hello world&#39;)",
+  "status": "Accepted"
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 id="organizations" class="panel-title">/organizations</h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel-group">
+              <div class="panel panel-white resource-modal">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_organizations"><span
+                        class="parent"></span>/organizations</a> <span class="methods"><a href="#organizations_post"><span
+                          class="badge badge_post">post</span></a> <a href="#organizations_get"><span class="badge badge_get">get</span></a></span></h4>
+                </div>
+                <div id="panel_organizations" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="list-group">
+                      <div onclick="window.location.href = '#organizations_post'" class="list-group-item"><span class="badge badge_post">post</span>
+                        <div class="method_description"></div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#organizations_get'" class="list-group-item"><span class="badge badge_get">get</span>
+                        <div class="method_description">
+                          <p>Returns list of users.</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="organizations_post">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span
+                            class="parent"></span>/organizations</h4>
+                      </div>
+                      <div class="modal-body">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#organizations_post_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#organizations_post_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="organizations_post_request">
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                              <li><strong>Content-Type</strong>: <em>required (string)</em>
+                                <p>"application/json"</p>
+                              </li>
+                            </ul>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "name": "Organization Name"
+}
+</code></pre>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="organizations_post_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "commit": "success"
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="organizations_get">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/organizations</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>Returns list of users.</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#organizations_get_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="organizations_get_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: array of object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>[
+  {
+    "name": "Google",
+    "organiztionId": 1,
+    "contestId": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "name": "Microsoft",
+    "organiztionId": 2,
+    "contestId": [
+      4,
+      5,
+      6
+    ]
+  }
+]</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-white resource-modal">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_organizations__organiztionid_"><span
+                        class="parent">/organizations</span>/{organiztionId}</a> <span class="methods"><a href="#organizations__organiztionid__get"><span
+                          class="badge badge_get">get</span></a> <a href="#organizations__organiztionid__put"><span
+                          class="badge badge_put">put</span></a> <a href="#organizations__organiztionid__delete"><span
+                          class="badge badge_delete">delete</span></a></span></h4>
+                </div>
+                <div id="panel_organizations__organiztionid_" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="list-group">
+                      <div onclick="window.location.href = '#organizations__organiztionid__get'" class="list-group-item"><span
+                          class="badge badge_get">get</span>
+                        <div class="method_description">
+                          <p>Returns details of organization</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#organizations__organiztionid__put'" class="list-group-item"><span
+                          class="badge badge_put">put</span>
+                        <div class="method_description">
+                          <p>Updates the details of the user</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#organizations__organiztionid__delete'" class="list-group-item"><span
+                          class="badge badge_delete">delete</span>
+                        <div class="method_description">
+                          <p>"To delete a orgnanization with {organiztionId}"</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="organizations__organiztionid__get">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/organizations</span>/{organiztionId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>Returns details of organization</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#organizations__organiztionid__get_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#organizations__organiztionid__get_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="organizations__organiztionid__get_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>organiztionId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="organizations__organiztionid__get_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "name": "Google",
+  "organiztionId": 1,
+  "contestId": [1,2,3]
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="organizations__organiztionid__put">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_put">put</span> <span class="parent">/organizations</span>/{organiztionId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>Updates the details of the user</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#organizations__organiztionid__put_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#organizations__organiztionid__put_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="organizations__organiztionid__put_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>organiztionId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "name": "{New Name}"
+}
+</code></pre>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="organizations__organiztionid__put_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "name": "{New Name}",
+  "organiztionId": 1,
+  "contestId": [1,2,3]
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="organizations__organiztionid__delete">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span
+                            class="parent">/organizations</span>/{organiztionId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"To delete a orgnanization with {organiztionId}"</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#organizations__organiztionid__delete_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#organizations__organiztionid__delete_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="organizations__organiztionid__delete_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>organiztionId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="organizations__organiztionid__delete_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "commit" : "success"
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 id="questions" class="panel-title">/questions</h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel-group">
+              <div class="panel panel-white resource-modal">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_questions"><span
+                        class="parent"></span>/questions</a> <span class="methods"><a href="#questions_post"><span
+                          class="badge badge_post">post</span></a> <a href="#questions_get"><span class="badge badge_get">get</span></a></span></h4>
+                </div>
+                <div id="panel_questions" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="list-group">
+                      <div onclick="window.location.href = '#questions_post'" class="list-group-item"><span class="badge badge_post">post</span>
+                        <div class="method_description"></div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#questions_get'" class="list-group-item"><span class="badge badge_get">get</span>
+                        <div class="method_description">
+                          <p>"Returns list of questions"</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="questions_post">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span
+                            class="parent"></span>/questions</h4>
+                      </div>
+                      <div class="modal-body">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#questions_post_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#questions_post_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="questions_post_request">
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "question": "Code for bubble sort",
+  "editorial": "Blah blah blah",
+  "testCases": "Some test cases"
+}
+</code></pre>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="questions_post_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "questionId": 0,
+  "question": "Code for bubble sort",
+  "editorial": "Blah blah blah",
+  "testCases": "Some test cases",
+  "submissionId": [2,3,4]
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="questions_get">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/questions</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"Returns list of questions"</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#questions_get_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#questions_get_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="questions_get_request">
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="questions_get_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: array of object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>[
+  {
+    "questionId": 0,
+    "question": "Code for bubble sort",
+    "editorial": "Blah blah blah",
+    "testCases": "Some test cases",
+    "submissionId": [2,3,4]
+  },
+  {
+    "questionId": 1,
+    "question": "Code for selection sort",
+    "editorial": "Blah blah blah",
+    "testCases": "Some test cases",
+    "submissionId": [5,6,7]
+  }
+]
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-white resource-modal">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_questions__questionid_"><span
+                        class="parent">/questions</span>/{questionId}</a> <span class="methods"><a href="#questions__questionid__get"><span
+                          class="badge badge_get">get</span></a> <a href="#questions__questionid__put"><span class="badge badge_put">put</span></a>
+                      <a href="#questions__questionid__delete"><span class="badge badge_delete">delete</span></a></span></h4>
+                </div>
+                <div id="panel_questions__questionid_" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="list-group">
+                      <div onclick="window.location.href = '#questions__questionid__get'" class="list-group-item"><span
+                          class="badge badge_get">get</span>
+                        <div class="method_description">
+                          <p>"Returns details of Question : {questionId}"</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#questions__questionid__put'" class="list-group-item"><span
+                          class="badge badge_put">put</span>
+                        <div class="method_description">
+                          <p>"Modify details of Question : {questionId} All fields are optional "</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#questions__questionid__delete'" class="list-group-item"><span
+                          class="badge badge_delete">delete</span>
+                        <div class="method_description">
+                          <p>"To delete a question with {questionId}"</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="questions__questionid__get">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/questions</span>/{questionId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"Returns details of Question : {questionId}"</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#questions__questionid__get_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#questions__questionid__get_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="questions__questionid__get_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>questionId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="questions__questionid__get_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "questionId": 1,
+  "question": "Code for selection sort",
+  "editorial": "Blah blah blah",
+  "testCases": "Some test cases",
+  "submissionId": [5,6,7]
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="questions__questionid__put">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_put">put</span> <span class="parent">/questions</span>/{questionId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"Modify details of Question : {questionId} All fields are optional "</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#questions__questionid__put_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#questions__questionid__put_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="questions__questionid__put_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>questionId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "question": "Code for selection sort",
+  "editorial": "Blah blah blah",
+  "testCases": "Some test cases"
+}
+</code></pre>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="questions__questionid__put_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "questionId": 1,
+  "question": "Code for selection sort",
+  "editorial": "Blah blah blah",
+  "testCases": "Some test cases",
+  "submissionId": [5,6,7]
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="questions__questionid__delete">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span
+                            class="parent">/questions</span>/{questionId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"To delete a question with {questionId}"</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#questions__questionid__delete_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#questions__questionid__delete_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="questions__questionid__delete_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>questionId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="questions__questionid__delete_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "commit" : "success"
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 id="contests" class="panel-title">/contests</h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel-group">
+              <div class="panel panel-white resource-modal">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_contests"><span
+                        class="parent"></span>/contests</a> <span class="methods"><a href="#contests_post"><span class="badge badge_post">post</span></a>
+                      <a href="#contests_get"><span class="badge badge_get">get</span></a></span></h4>
+                </div>
+                <div id="panel_contests" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="list-group">
+                      <div onclick="window.location.href = '#contests_post'" class="list-group-item"><span class="badge badge_post">post</span>
+                        <div class="method_description"></div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#contests_get'" class="list-group-item"><span class="badge badge_get">get</span>
+                        <div class="method_description">
+                          <p>"Returns list of contests"</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="contests_post">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span
+                            class="parent"></span>/contests</h4>
+                      </div>
+                      <div class="modal-body">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#contests_post_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#contests_post_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="contests_post_request">
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "name" : "Contest name",
+  "organizationId": 1
+}
+</code></pre>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="contests_post_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "contestId": 1,
+  "organizationId": 1,
+  "name" : "Contest name",
+  "leaderboard": "leaderboard",
+  "questionId": [1,3,2],
+  "userId": [0,2,3]
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="contests_get">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/contests</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"Returns list of contests"</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#contests_get_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#contests_get_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="contests_get_request">
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="contests_get_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: array of object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>[
+  {
+    "contestId": 1,
+    "organizationId": 1,
+    "name" : "Contest name",
+    "leaderboard": "leaderboard",
+    "questionId": [1,3,2],
+    "userId": [0,2,3]
+  },
+  {
+    "contestId": 2,
+    "organizationId": 2,
+    "name" : "Contest name",
+    "leaderboard": "leaderboard",
+    "questionId": [1,3,5],
+    "userId": [0,1,4]
+  }
+]
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-white resource-modal">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_contests__contestid_"><span
+                        class="parent">/contests</span>/{contestId}</a> <span class="methods"><a href="#contests__contestid__get"><span
+                          class="badge badge_get">get</span></a> <a href="#contests__contestid__put"><span class="badge badge_put">put</span></a>
+                      <a href="#contests__contestid__delete"><span class="badge badge_delete">delete</span></a></span></h4>
+                </div>
+                <div id="panel_contests__contestid_" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="list-group">
+                      <div onclick="window.location.href = '#contests__contestid__get'" class="list-group-item"><span
+                          class="badge badge_get">get</span>
+                        <div class="method_description">
+                          <p>"Returns details of Contest : {contestId}"</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#contests__contestid__put'" class="list-group-item"><span
+                          class="badge badge_put">put</span>
+                        <div class="method_description">
+                          <p>"Modify details of Contest : {contestId} All fields are optional "</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div onclick="window.location.href = '#contests__contestid__delete'" class="list-group-item"><span
+                          class="badge badge_delete">delete</span>
+                        <div class="method_description">
+                          <p>"To delete a user with {contestId}"</p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="contests__contestid__get">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/contests</span>/{contestId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"Returns details of Contest : {contestId}"</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#contests__contestid__get_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#contests__contestid__get_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="contests__contestid__get_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>contestId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="contests__contestid__get_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "contestId": 1,
+  "organizationId": 1,
+  "name" : "Contest name",
+  "leaderboard": "leaderboard",
+  "questionId": [1,3,2],
+  "userId": [0,2,3]
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="contests__contestid__put">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_put">put</span> <span class="parent">/contests</span>/{contestId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"Modify details of Contest : {contestId} All fields are optional "</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#contests__contestid__put_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#contests__contestid__put_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="contests__contestid__put_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>contestId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "name" : "New Contest name"
+}
+</code></pre>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="contests__contestid__put_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "contestId": 1,
+  "organizationId": 1,
+  "name" : "New Contest name",
+  "leaderboard": "leaderboard",
+  "questionId": [1,3,2],
+  "userId": [0,2,3]
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" tabindex="0" id="contests__contestid__delete">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span
+                            class="parent">/contests</span>/{contestId}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-info">
+                          <p>"To delete a user with {contestId}"</p>
+                        </div>
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#contests__contestid__delete_request" data-toggle="tab">Request</a></li>
+                          <li><a href="#contests__contestid__delete_response" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="contests__contestid__delete_request">
+                            <h3>URI Parameters</h3>
+                            <ul>
+                              <li><strong>contestId</strong>: <em>required (string)</em></li>
+                            </ul>
+                            <h3>Headers</h3>
+                            <ul>
+                              <li><strong>Authorization</strong>: <em>required (string)</em>
+                                <p>"A valid oAuthToken"</p>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="tab-pane" id="contests__contestid__delete_response">
+                            <h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2>
+                            <h3>Body</h3>
+                            <p><strong>Media type</strong>: application/json</p>
+                            <p><strong>Type</strong>: object</p>
+                            <p><strong>Example</strong>:</p>
+                            <div class="examples">
+                              <pre><code>{
+  "commit" : "success"
+}
+</code></pre>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div id="sidebar" class="hidden-print affix" role="complementary">
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="#users">/users</a></li>
+            <li><a href="#submissions">/submissions</a></li>
+            <li><a href="#organizations">/organizations</a></li>
+            <li><a href="#questions">/questions</a></li>
+            <li><a href="#contests">/contests</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
